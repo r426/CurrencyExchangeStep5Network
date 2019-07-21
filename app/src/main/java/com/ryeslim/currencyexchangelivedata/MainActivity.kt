@@ -37,7 +37,6 @@ class MainActivity : AppCompatActivity() {
         mViewModel.infoMessage.observe(this, Observer { newInfoMessage ->
             binding.infoMessage.text = newInfoMessage
         })
-        //clearButtons()
         binding.convert.setOnClickListener { manageConversion() }
     }
 
@@ -106,13 +105,5 @@ class MainActivity : AppCompatActivity() {
         binding.radioGroupFrom.clearCheck()
         binding.radioGroupTo.clearCheck()
         binding.amountFrom.text.clear()
-
-//        binding.eurBalanceValue.text = String.format("%.2f", mViewModel.currencies[0].value?.balanceValue)
-//        binding.usdBalanceValue.text = String.format("%.2f", mViewModel.currencies[1].value?.balanceValue)
-//        binding.jpyBalanceValue.text = String.format("%.2f", mViewModel.currencies[2].value?.balanceValue)
-//        binding.eurCommissionsValue.text = String.format("%.2f", mViewModel.currencies[0].value?.commissionsValue)
-//        binding.usdCommissionsValue.text = String.format("%.2f", mViewModel.currencies[1].value?.commissionsValue)
-//        binding.jpyCommissionsValue.text = String.format("%.2f", mViewModel.currencies[2].value?.commissionsValue)
-//        binding.infoMessage.text = mViewModel.infoMessage.value
     }
 }
