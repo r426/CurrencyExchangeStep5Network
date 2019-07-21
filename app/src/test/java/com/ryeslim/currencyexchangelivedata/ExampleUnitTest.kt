@@ -1,4 +1,4 @@
-package com.ryeslim.currencyexchangeviewmodel
+package com.ryeslim.currencyexchangelivedata
 
 import org.junit.Test
 
