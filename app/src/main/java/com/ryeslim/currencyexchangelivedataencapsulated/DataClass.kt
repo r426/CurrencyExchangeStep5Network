@@ -1,4 +1,4 @@
-package com.ryeslim.currencyexchangelivedata
+package com.ryeslim.currencyexchangelivedataencapsulated
 
 import java.math.BigDecimal
 

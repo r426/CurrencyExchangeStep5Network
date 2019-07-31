@@ -1,4 +1,4 @@
-package com.ryeslim.currencyexchangelivedata
+package com.ryeslim.currencyexchangelivedataencapsulated
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -6,7 +6,7 @@ import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
-import com.ryeslim.currencyexchangelivedata.databinding.ActivityMainBinding
+import com.ryeslim.currencyexchangelivedataencapsulated.databinding.ActivityMainBinding
 import java.math.RoundingMode
 
 class MainActivity : AppCompatActivity() {

@@ -1,5 +1,6 @@
-package com.ryeslim.currencyexchangelivedata
+package com.ryeslim.currencyexchangelivedataencapsulated
 
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import java.math.BigDecimal
@@ -7,19 +8,30 @@ import java.math.RoundingMode
 
 class MainViewModel : ViewModel() {
 
-    val euro = MutableLiveData<Currency>()
-    val dollar = MutableLiveData<Currency>()
-    val yen = MutableLiveData<Currency>()
-    val infoMessage = MutableLiveData<String>()
+    private val _euro = MutableLiveData<Currency>()
+    val euro: LiveData<Currency>
+        get() = _euro
+
+    private val _dollar = MutableLiveData<Currency>()
+    val dollar: LiveData<Currency>
+        get() = _dollar
+
+    private val _yen = MutableLiveData<Currency>()
+    val yen: LiveData<Currency>
+        get() = _yen
+
+    private val _infoMessage = MutableLiveData<String>()
+    val infoMessage: LiveData<String>
+        get() = _infoMessage
 
     init {
-        euro.value = Currency(1000.toBigDecimal(), "EUR", 0.toBigDecimal(), "EUR")
-        dollar.value = Currency(0.toBigDecimal(), "USD", 0.toBigDecimal(), "USD")
-        yen.value = Currency(0.toBigDecimal(), "JPY", 0.toBigDecimal(), "JPY")
-        infoMessage.value = ""
+        _euro.value = Currency(1000.toBigDecimal(), "EUR", 0.toBigDecimal(), "EUR")
+        _dollar.value = Currency(0.toBigDecimal(), "USD", 0.toBigDecimal(), "USD")
+        _yen.value = Currency(0.toBigDecimal(), "JPY", 0.toBigDecimal(), "JPY")
+        _infoMessage.value = ""
     }
 
-    val currencies = arrayOf(euro, dollar, yen)
+    val currencies = arrayOf(_euro, _dollar, _yen)
 
     var amountFrom = (-1).toBigDecimal()
     private var amountResult = 0.toBigDecimal()
@@ -45,11 +57,13 @@ class MainViewModel : ViewModel() {
 
     fun calculateValues() {
         currencies[indexFrom].value?.balanceValue =
+
             currencies[indexFrom].value?.balanceValue?.minus(amountFrom)?.minus(thisCommission)!!
 
         currencies[indexTo].value?.balanceValue = currencies[indexTo].value?.balanceValue?.plus(amountResult)!!
 
-        currencies[indexFrom].value?.commissionsValue = currencies[indexFrom].value?.commissionsValue?.plus(thisCommission)!!
+        currencies[indexFrom].value?.commissionsValue =
+            currencies[indexFrom].value?.commissionsValue?.plus(thisCommission)!!
 
         // force postValue to notify Observers
         currencies[indexFrom].value = currencies[indexFrom].value
@@ -64,12 +78,13 @@ class MainViewModel : ViewModel() {
         }
     }
 
-    private fun zeroSevenPercent(value: BigDecimal, percent: BigDecimal): BigDecimal = (value * percent / 100.toBigDecimal()).setScale(
-        2, RoundingMode.HALF_EVEN
-    )
+    private fun zeroSevenPercent(value: BigDecimal, percent: BigDecimal): BigDecimal =
+        (value * percent / 100.toBigDecimal()).setScale(
+            2, RoundingMode.HALF_EVEN
+        )
 
     fun makeInfoMessage() {
-        infoMessage.value = String.format(
+        _infoMessage.value = String.format(
             "You converted %.2f %s to %.2f %s. Commissions paid: %.2f %s",
             amountFrom,
             currencies[indexFrom].value?.balanceCurrency,
