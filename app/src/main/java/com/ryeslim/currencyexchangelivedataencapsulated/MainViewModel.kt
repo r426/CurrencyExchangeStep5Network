@@ -25,9 +25,9 @@ class MainViewModel : ViewModel() {
         get() = _infoMessage
 
     init {
-        _euro.value = Currency(1000.toBigDecimal(), "EUR", 0.toBigDecimal(), "EUR")
-        _dollar.value = Currency(0.toBigDecimal(), "USD", 0.toBigDecimal(), "USD")
-        _yen.value = Currency(0.toBigDecimal(), "JPY", 0.toBigDecimal(), "JPY")
+        _euro.value = Currency(1000.toBigDecimal(), 0.toBigDecimal(), "EUR")
+        _dollar.value = Currency(0.toBigDecimal(), 0.toBigDecimal(), "USD")
+        _yen.value = Currency(0.toBigDecimal(), 0.toBigDecimal(), "JPY")
         _infoMessage.value = ""
     }
 
@@ -44,7 +44,7 @@ class MainViewModel : ViewModel() {
 
     fun makeUrl() {
         var url: String =
-            "http://api.evp.lt/currency/commercial/exchange/$amountFrom-${(currencies[indexFrom].value)?.balanceCurrency}/${(currencies[indexTo].value)?.balanceCurrency}/latest"
+            "http://api.evp.lt/currency/commercial/exchange/$amountFrom-${(currencies[indexFrom].value)?.currencyCode}/${(currencies[indexTo].value)?.currencyCode}/latest"
     }
 
     fun getResultFromNetwork() {
@@ -87,11 +87,11 @@ class MainViewModel : ViewModel() {
         _infoMessage.value = String.format(
             "You converted %.2f %s to %.2f %s. Commissions paid: %.2f %s",
             amountFrom,
-            currencies[indexFrom].value?.balanceCurrency,
+            currencies[indexFrom].value?.currencyCode,
             amountResult,
-            currencies[indexTo].value?.balanceCurrency,
+            currencies[indexTo].value?.currencyCode,
             thisCommission,
-            currencies[indexFrom].value?.commissionsCurrency
+            currencies[indexFrom].value?.currencyCode
         )
     }
 }
